@@ -42,6 +42,7 @@ Crear una solución que permita la organización inteligente de contenido técni
 - Servicio usado (Object Storage) y para qué
 
 ## Equipo
+
 - Matias Manriquez -- Project Manager
 - Dennisse Pailamilla -- Data Scientist
 - Jonathan Mangano -- Data Scientist
