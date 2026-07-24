@@ -1,0 +1,122 @@
+# OCI Upload/Download
+
+Este proyecto permite subir y descargar archivos desde Oracle Cloud Infrastructure (OCI) Object Storage usando Python.
+
+## Requisitos
+
+- Python 3.x
+- Una cuenta de Oracle Cloud con acceso a Object Storage
+- Un bucket ya creado en OCI
+- Una clave privada OCI para autenticación
+
+## 1. Instalar dependencias
+
+Desde la carpeta del proyecto, ejecuta:
+
+```bash
+pip install -r requirements.txt
+```
+
+Si necesitas instalar manualmente también puedes usar:
+
+```bash
+pip install oci python-dotenv
+```
+
+## 2. Configurar las variables de entorno
+
+Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+
+```env
+OCI_USER=...
+OCI_FINGERPRINT=...
+OCI_TENANCY=...
+OCI_REGION=...
+OCI_KEY_FILE=...
+OCI_NAMESPACE=...
+OCI_BUCKET_NAME=...
+```
+
+### Descripción de cada variable
+
+- `OCI_USER`: ID del usuario de OCI
+- `OCI_FINGERPRINT`: fingerprint de la clave pública usada para autenticación
+- `OCI_TENANCY`: OCID de la tenancy
+- `OCI_REGION`: región de OCI, por ejemplo `sa-saopaulo-1`
+- `OCI_KEY_FILE`: ruta completa a la clave privada PEM
+- `OCI_NAMESPACE`: namespace del Object Storage
+- `OCI_BUCKET_NAME`: nombre del bucket donde se subirán o descargarán los archivos
+
+## 3. Verificar la configuración
+
+El archivo [config.py](config.py) lee estas variables con `load_dotenv()` y las usa para crear el cliente de OCI.
+
+La conexión se realiza desde [conexion.py](conexion.py), donde se inicializa `ObjectStorageClient`.
+
+## 4. Subir un archivo a la nube
+
+La función principal de subida está en [up.py](up.py).
+
+Para subir un archivo local al bucket:
+
+1. Ajusta la ruta del archivo local que deseas enviar.
+2. Define la ruta destino dentro del bucket.
+3. Ejecuta el programa e elige la opción `1`.
+
+Ejemplo:
+
+- Archivo local: `modelo_reconocedor_numeros.pkl`
+- Archivo en la nube: `model/modelo_reconocedor_numeros.pkl`
+
+## 5. Descargar un archivo desde la nube
+
+La función principal de descarga está en [down.py](down.py).
+
+Para descargar un archivo del bucket:
+
+1. Define la ruta del archivo en la nube.
+2. Define la ruta local donde quieres guardarlo.
+3. Ejecuta el programa y elige la opción `2`.
+
+## 6. Ejecutar la aplicación interactiva
+
+Ejecuta:
+
+```bash
+python controller.py
+```
+
+Se mostrará un menú:
+
+```text
+Subir Archivo = 1 / Bajar Archivo = 2 / Cancelar = 0
+```
+
+### Opciones
+
+- `1`: subir archivo
+- `2`: descargar archivo
+- `0`: cancelar
+
+## 7. Personalizar rutas y archivos
+
+El flujo de ejemplo está definido en [controller.py](controller.py). Si quieres usar otros archivos, cambia estas variables:
+
+```python
+archivo_original = "modelo_reconocedor_numeros.pkl"
+archivo_en_nube = "model/modelo_reconocedor_numeros.pkl"
+archivo_descargado = "descargado_" + archivo_original
+```
+
+## 8. Flujo resumido
+
+1. Configurar `.env`
+2. Instalar dependencias
+3. Ejecutar `python controller.py`
+4. Elegir:
+   - `1` para subir
+   - `2` para bajar
+
+## Nota importante
+
+Este proyecto usa el SDK oficial de OCI y el cliente `ObjectStorageClient`. Asegúrate de que el usuario y la clave privada tengan permisos sobre el bucket correspondiente.
