@@ -19,7 +19,8 @@ public class PythonAPI {
     private final ObjectMapper objectMapper;
 
     public PythonAPI() {
-        this.pythonApiUrl = "http://127.0.0.1:8000/predict";
+        this.pythonApiUrl = "http://127.0.0.1:8000/contenido";
+        // debe ser  8000/contenido para sincronizar con denisse
         this.client = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
     }
