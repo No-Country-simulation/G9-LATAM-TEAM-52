@@ -29,4 +29,12 @@ public class GlobalExceptionHandler {
         error.put("error", "Ocurrió un problema al procesar la solicitud con el servicio de IA.");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error); // Devuelve error 500
     }
+
+    // 3. Ataja fallos de clasificación específicos o de respuesta errónea de la API de Python
+    @ExceptionHandler(ClasificacionException.class)
+    public ResponseEntity<Map<String, String>> manejarClasificacionException(ClasificacionException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error); // Devuelve error 500
+    }
 }
