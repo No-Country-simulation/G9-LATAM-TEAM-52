@@ -15,7 +15,7 @@ import java.util.List;
 public class Clasificacion {
 
     private String categoria;
-    private double probabilidad;
+    private Double probabilidad;
 
     @JsonProperty("informacion_adicional") // <--- ESTO MAPEA EL CAMPO DE PYTHON
     private List<String> informacionAdicional;

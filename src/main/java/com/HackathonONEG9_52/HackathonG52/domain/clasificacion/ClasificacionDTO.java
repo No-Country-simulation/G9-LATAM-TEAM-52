@@ -8,7 +8,7 @@ import java.util.List;
 
 public record ClasificacionDTO(
         @NotBlank String categoria,
-        @NotNull double probabilidad,
+        @NotNull Double probabilidad,
         @JsonProperty("informacion_adicional") @NotNull List<String> informacionAdicional
 ) {
 }
