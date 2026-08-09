@@ -1,13 +1,12 @@
 # G9-LATAM-TEAM-52
-Crear una solución que permita la organización inteligente de contenido técnico, facilitando su clasificación, consulta y reutilización.
-
 # TechMind – Organización Inteligente del Conocimiento Técnico
 
 ## Descripción
-[1-2 párrafos: qué hace el proyecto, para quién]
+TechMind es una solución que organiza inteligentemente contenido técnico —artículos, documentación, apuntes y tutoriales— usando Ciencia de Datos para clasificarlo por tema y extraer palabras clave automáticamente, entregando el resultado en formato JSON a través de una API REST; el equipo lo construye combinando un modelo de TF-IDF + Regresión Logística servido desde un microservicio FastAPI, un back-end en Spring Boot que lo consume, e integración con OCI (Object Storage y Compute) para almacenar el modelo y alojar el servicio.
 
 ## Arquitectura
-[Diagrama simple: Cliente → API Spring Boot → Microservicio FastAPI → Modelo]
+<img width="664" height="282" alt="image" src="https://github.com/user-attachments/assets/119ee8a7-4d82-4012-b3fc-f00e5e54e459" />
+
 
 ## Cómo ejecutar el proyecto
 ### Requisitos
