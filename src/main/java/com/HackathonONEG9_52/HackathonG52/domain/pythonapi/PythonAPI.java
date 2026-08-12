@@ -3,6 +3,7 @@ package com.HackathonONEG9_52.HackathonG52.domain.pythonapi;
 import com.HackathonONEG9_52.HackathonG52.domain.clasificacion.Clasificacion;
 import com.HackathonONEG9_52.HackathonG52.domain.contenido.Contenido;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,9 +19,8 @@ public class PythonAPI {
     private final HttpClient client;
     private final ObjectMapper objectMapper;
 
-    public PythonAPI() {
-        this.pythonApiUrl = "http://136.248.240.201:8000/contenido";
-        // debe ser  8000/contenido para sincronizar con denisse
+    public PythonAPI(@Value("${python.api.url:http://136.248.240.201:8000/contenido}") String pythonApiUrl) {
+        this.pythonApiUrl = pythonApiUrl;
         this.client = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
     }
@@ -46,7 +46,8 @@ public class PythonAPI {
             return objectMapper.readValue(response.body(), Clasificacion.class);
 
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Error", e);
+            throw new RuntimeException("Error al comunicarse con el servicio de IA en " + pythonApiUrl, e);
         }
     }
 }
+

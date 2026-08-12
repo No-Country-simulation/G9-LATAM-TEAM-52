@@ -47,6 +47,8 @@ public class Clasificacion {
     public ClasificacionDTO aDTO() {
         //Transformamos una categoria en un string para pasarlo junto al dto de clasificacion
         String nombreCategoria = (this.categoria != null) ? this.categoria.getDescripcion() : null;
-        return new ClasificacionDTO(nombreCategoria, this.probabilidad, this.informacionAdicional);
+        String titulo = (this.contenido != null) ? this.contenido.getTitulo() : null;
+        String texto = (this.contenido != null) ? this.contenido.getTexto() : null;
+        return new ClasificacionDTO(titulo, texto, nombreCategoria, this.probabilidad, this.informacionAdicional);
     }
 }
