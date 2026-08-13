@@ -21,16 +21,88 @@ TechMind es una solución que organiza inteligentemente contenido técnico —ar
 ## Cómo usar la API
 ### POST /contenido
 **Entrada:**
-```json
+```
+json
 { "titulo": "...", "texto": "..." }
 ```
 **Salida:**
-```json
+```
+json
 { "categoria": "...", "probabilidad": 0.89, "informacion_adicional": [...] }
 ```
 
-## Ejemplos de uso (mínimo 3, obligatorio)
-[request/response reales, no inventados]
+## Ejemplos de uso
+
+### Ejemplo 1 — Categoría Back-End
+**Request:**
+```
+POST /contenido
+Content-Type: application/json
+
+{
+  "titulo": "Creación de una API REST con Spring Boot",
+  "texto": "En este tutorial se explica cómo construir una API REST utilizando Java y el framework Spring Boot, cubriendo la configuración de controladores, la inyección de dependencias y la conexión con una base de datos mediante Spring Data JPA."
+}
+```
+
+**Response:**
+```
+{
+  "categoria": "Backend",
+  "probabilidad": 0.91,
+  "informacion_adicional": ["Spring Boot", "Java", "API REST", "Spring Data JPA", "controladores"]
+}
+```
+
+### Ejemplo 2 — Categoría Back-End
+**Request:**
+```
+POST /contenido
+Content-Type: application/json
+
+{
+  "titulo": "Arquitectura de componentes en Angular",
+  "texto": "Uso de TypeScript, RxJS y Signals para construir interfaces web reactivas"
+}
+```
+
+**Response:**
+```
+{
+  "categoria": "Frontend",
+  "probabilidad": 0.7,
+  "informacion_adicional": [
+    "en",
+    "interfaces",
+    "signals",
+    "para",
+    "web"
+  ]
+}
+```
+
+### Ejemplo 3 — Categoría Data Science
+**Request:**
+```
+POST /contenido
+Content-Type: application/json
+
+{
+  "titulo": "Concurrencia y Goroutines en Go",
+  "texto": "Creación de microservicios de alto rendimiento y manejo de canales en Golang"
+}
+```
+
+**Response:**
+```
+{
+  "categoria": "Data Science",
+  "probabilidad": 0.3,
+  "informacion_adicional": [
+    "en"
+  ]
+}
+```
 
 ## Modelo de Data Science
 - Dataset utilizado
@@ -38,7 +110,12 @@ TechMind es una solución que organiza inteligentemente contenido técnico —ar
 - Métricas de evaluación
 
 ## Integración con OCI
-- Servicio usado (Object Storage) y para qué
+
+### - Object Storage
+
+### - OCI Copmute
+
+### - OCI Functions
 
 ## Equipo
 
