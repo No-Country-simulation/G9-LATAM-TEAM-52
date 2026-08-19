@@ -21,14 +21,15 @@ public class ContenidoService {
     private final CategoriaRepository categoriaRepository;
     private final ClasificacionRepository clasificacionRepository;
 
-    // 1. Guarda el contenido, consulta a OCI y vincula las 3 tablas en Supabase (evitando duplicados)
+    // 1. Guarda el contenido, consulta a OCI y vincula las 3 tablas en Supabase
     public ClasificacionDTO guardarYClasificar(ContenidoDTO dto) {
-        // Verificar si ya existe un contenido exactamente igual (por título y texto o texto)
+        // Buscamos si ya existe el mismo texto para no duplicar ni gastar llamadas de IA
         Optional<Contenido> contenidoExistente = contenidoRepository.findByTituloAndTexto(dto.titulo(), dto.texto());
         if (contenidoExistente.isEmpty()) {
             contenidoExistente = contenidoRepository.findByTexto(dto.texto());
         }
 
+        // Si ya está guardado, devolvemos la clasificación vieja directamente
         if (contenidoExistente.isPresent()) {
             Optional<Clasificacion> clasificacionExistente = clasificacionRepository.findByContenido(contenidoExistente.get());
             if (clasificacionExistente.isPresent()) {
@@ -60,6 +61,7 @@ public class ContenidoService {
             return todas.stream().map(Clasificacion::aDTO).toList();
         }
 
+        // Filtro dinámico por coincidencia en texto o categoría
         return todas.stream()
                 .filter(c -> (c.getContenido() != null && c.getContenido().getTexto().toLowerCase().contains(query.toLowerCase())) ||
                         (c.getCategoria() != null && c.getCategoria().getDescripcion().toLowerCase().contains(query.toLowerCase())))

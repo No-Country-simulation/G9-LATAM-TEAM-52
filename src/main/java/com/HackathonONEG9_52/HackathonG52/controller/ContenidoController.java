@@ -12,18 +12,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contenido")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*") // Habilitamos CORS para que el frontend no salte con error de bloqueo
 @RequiredArgsConstructor
 public class ContenidoController {
 
+    // Traemos el servicio con la lógica de negocio
     private final ContenidoService contenidoService;
 
     @PostMapping
     public ResponseEntity<ClasificacionDTO> clasificarContenido(@RequestBody @Valid ContenidoDTO dto) {
+        // Delegamos el guardado y la llamada a OCI al servicio
         ClasificacionDTO clasificacionDTO = contenidoService.guardarYClasificar(dto);
         return ResponseEntity.ok(clasificacionDTO);
     }
 
+    // Buscador y listado general filtrando por query opcional
     @GetMapping
     public ResponseEntity<List<ClasificacionDTO>> obtenerContenidos(@RequestParam(required = false) String query) {
         List<ClasificacionDTO> contenidos = contenidoService.buscar(query);

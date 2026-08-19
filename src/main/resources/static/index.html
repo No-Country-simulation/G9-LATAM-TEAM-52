@@ -337,9 +337,9 @@
                 const tr = document.createElement('tr');
                 
                 // Adaptación flexible según la estructura recibida
-                const titulo = item.titulo || item.contenido?.titulo || 'Sin título';
-                const texto = item.texto || item.contenido?.texto || 'Sin texto';
-                const categoria = item.categoria || item.categoriaEntity?.descripcion || 'Sin categoría';
+                const titulo = item.titulo || 'Sin título';
+                const texto = item.texto || 'Sin texto';
+                const categoria = item.categoria || 'Sin categoría';
                 const probabilidad = item.probabilidad ? `${(item.probabilidad * 100).toFixed(1)}%` : 'N/A';
                 
                 const palabrasClave = item.informacion_adicional || item.informacionAdicional || [];

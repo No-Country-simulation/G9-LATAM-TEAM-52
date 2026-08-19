@@ -19,6 +19,7 @@ public class PythonAPI {
     private final HttpClient client;
     private final ObjectMapper objectMapper;
 
+    // Traemos la URL de las propiedades o usamos el fallback de Denisse
     public PythonAPI(@Value("${python.api.url:http://136.248.240.201:8000/contenido}") String pythonApiUrl) {
         this.pythonApiUrl = pythonApiUrl;
         this.client = HttpClient.newHttpClient();
@@ -27,17 +28,15 @@ public class PythonAPI {
 
     public Clasificacion clasificar(Contenido contenido) {
         try {
-
             //Convertimos el contenido a formato JSON
             String jsonContenido = objectMapper.writeValueAsString(contenido);
 
             //Armamos la peticion
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(pythonApiUrl))
-                    .header("Content-Type", "application/json")//Avisa que el contenido enviado es un JSON
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonContenido)) // Request Post con el cuerpo JSON
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonContenido))
                     .build();
-
 
             //Enviamos peticion y recibimos la respuesta en formato String(JSON)
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -50,4 +49,3 @@ public class PythonAPI {
         }
     }
 }
-
