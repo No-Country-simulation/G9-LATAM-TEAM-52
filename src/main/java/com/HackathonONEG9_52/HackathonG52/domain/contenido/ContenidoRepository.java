@@ -11,7 +11,8 @@ public interface ContenidoRepository extends JpaRepository<Contenido, Long> {
 
     List<Contenido> findByTextoContainingIgnoreCaseOrCategoriaContainingIgnoreCase(String texto, String categoria);
 
+    // Buscadores para evitar guardar textos repetidos
     Optional<Contenido> findByTituloAndTexto(String titulo, String texto);
 
     Optional<Contenido> findByTexto(String texto);
-}
+}

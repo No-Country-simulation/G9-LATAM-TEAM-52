@@ -6,6 +6,7 @@ import com.HackathonONEG9_52.HackathonG52.domain.clasificacion.Clasificacion;
 import com.HackathonONEG9_52.HackathonG52.domain.clasificacion.ClasificacionDTO;
 import com.HackathonONEG9_52.HackathonG52.domain.clasificacion.ClasificacionRepository;
 import com.HackathonONEG9_52.HackathonG52.domain.pythonapi.PythonAPI;
+import com.HackathonONEG9_52.HackathonG52.exception.ClasificacionException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,19 +22,12 @@ public class ContenidoService {
     private final CategoriaRepository categoriaRepository;
     private final ClasificacionRepository clasificacionRepository;
 
-    // 1. Guarda el contenido, consulta a OCI y vincula las 3 tablas en Supabase (evitando duplicados)
+    // 1. Guarda el contenido, consulta a OCI y vincula las 3 tablas en Supabase
     public ClasificacionDTO guardarYClasificar(ContenidoDTO dto) {
-        // Verificar si ya existe un contenido exactamente igual (por título y texto o texto)
+        // Validamos si ya existe el mismo título y texto
         Optional<Contenido> contenidoExistente = contenidoRepository.findByTituloAndTexto(dto.titulo(), dto.texto());
-        if (contenidoExistente.isEmpty()) {
-            contenidoExistente = contenidoRepository.findByTexto(dto.texto());
-        }
-
         if (contenidoExistente.isPresent()) {
-            Optional<Clasificacion> clasificacionExistente = clasificacionRepository.findByContenido(contenidoExistente.get());
-            if (clasificacionExistente.isPresent()) {
-                return clasificacionExistente.get().aDTO();
-            }
+            throw new ClasificacionException("Esta tabla ya existe en la base de datos!");
         }
 
         Contenido contenido = new Contenido(dto);
@@ -60,6 +54,7 @@ public class ContenidoService {
             return todas.stream().map(Clasificacion::aDTO).toList();
         }
 
+        // Filtro dinámico por coincidencia en texto o categoría
         return todas.stream()
                 .filter(c -> (c.getContenido() != null && c.getContenido().getTexto().toLowerCase().contains(query.toLowerCase())) ||
                         (c.getCategoria() != null && c.getCategoria().getDescripcion().toLowerCase().contains(query.toLowerCase())))

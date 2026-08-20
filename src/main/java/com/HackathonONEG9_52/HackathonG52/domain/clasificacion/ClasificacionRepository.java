@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface ClasificacionRepository extends JpaRepository<Clasificacion, Long> {
 
+    // Trae la clasificación guardada para un contenido ya existente
     Optional<Clasificacion> findByContenido(Contenido contenido);
 }
-
