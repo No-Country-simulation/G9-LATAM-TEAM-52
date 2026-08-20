@@ -10,77 +10,272 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
         }
 
         body {
             background-color: #f4f6f9;
             color: #333;
-            padding: 30px;
+            padding: 30px 15px;
             display: flex;
             justify-content: center;
         }
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1080px;
             background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 25px 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
             position: relative;
         }
 
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
         h1 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+            font-size: 1.55rem;
             color: #1e293b;
+            font-weight: 700;
         }
 
-        /* Buscador */
-        .search-box {
+        /* Boton Modo Oscuro / Claro */
+        .theme-toggle-btn {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+            transform: scale(1.05);
+        }
+
+        /* Contenedor principal de busqueda */
+        .search-section {
             border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 22px;
             background-color: #f8fafc;
+            position: relative;
         }
 
-        .search-box label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
+        .search-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            padding-right: 40px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            background-color: #ffffff;
+            color: #1e293b;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .search-clear-icon {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        .search-clear-icon:hover {
             color: #475569;
         }
 
-        .search-box input {
+        /* Desplegable predictivo */
+        .search-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
             width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            z-index: 500;
+            display: none;
+            overflow: hidden;
+            animation: dropdownFade 0.15s ease-out;
+        }
+
+        @keyframes dropdownFade {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-header {
+            padding: 8px 14px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #64748b;
+            background-color: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+            text-transform: uppercase;
+        }
+
+        .dropdown-item {
+            padding: 11px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.93rem;
+            color: #334155;
+            transition: background 0.15s;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover, .dropdown-item.active {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .dropdown-item-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dropdown-item-count {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* Etiquetas de filtros activos */
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+            align-items: center;
+        }
+
+        .filter-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            animation: tagPop 0.2s ease-out;
+        }
+
+        @keyframes tagPop {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .filter-tag-close {
+            cursor: pointer;
             font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
+            font-weight: 700;
+            color: #0284c7;
+            margin-left: 2px;
+            line-height: 1;
         }
 
-        .search-box input:focus {
-            border-color: #2563eb;
+        .filter-tag-close:hover {
+            color: #0369a1;
         }
 
-        /* Tabla */
+        .btn-clear-all {
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.15s;
+        }
+
+        .btn-clear-all:hover {
+            background-color: #fee2e2;
+        }
+
+        /* Tabla interactiva */
         .table-box {
             border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 18px 20px;
             background-color: #ffffff;
-            min-height: 250px;
-            margin-bottom: 20px;
+            min-height: 280px;
+            margin-bottom: 22px;
             overflow-x: auto;
         }
 
+        .table-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
         .table-box h2 {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            color: #475569;
+            font-size: 1.15rem;
+            color: #334155;
+            font-weight: 700;
+        }
+
+        .counter-badge {
+            font-size: 0.82rem;
+            background-color: #f1f5f9;
+            color: #64748b;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
         }
 
         table {
@@ -90,29 +285,47 @@
         }
 
         th, td {
-            padding: 12px;
+            padding: 12px 14px;
             border-bottom: 1px solid #e2e8f0;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
+            vertical-align: middle;
         }
 
         th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .clickable-row {
+            cursor: pointer;
+        }
+
+        .clickable-row:hover {
+            background-color: #f1f5f9;
+        }
+
+        .category-badge {
             background-color: #f1f5f9;
             color: #334155;
-            font-weight: 600;
-        }
-
-        tr:hover {
-            background-color: #f8fafc;
-        }
-
-        .badge {
-            background-color: #e0f2fe;
-            color: #0369a1;
-            padding: 4px 8px;
+            padding: 4px 10px;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
             display: inline-block;
+            border: 1px solid #e2e8f0;
+        }
+
+        .prob-badge {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 9px;
+            border-radius: 6px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            display: inline-block;
+            border: 1px solid #bae6fd;
         }
 
         .keywords {
@@ -122,36 +335,39 @@
         }
 
         .tag {
-            background-color: #f1f5f9;
-            color: #64748b;
-            padding: 2px 6px;
+            background-color: #f8fafc;
+            color: #475569;
+            padding: 2px 7px;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.76rem;
+            border: 1px solid #e2e8f0;
         }
 
-        /* Botón Subir Texto */
+        /* Botones */
         .actions-bar {
             display: flex;
             justify-content: flex-end;
         }
 
         .btn {
-            padding: 10px 20px;
-            font-size: 1rem;
+            padding: 11px 22px;
+            font-size: 0.98rem;
             font-weight: 600;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.2s ease;
         }
 
         .btn-primary {
             background-color: #2563eb;
             color: white;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
         }
 
         .btn-primary:hover {
             background-color: #1d4ed8;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
         }
 
         .btn-secondary {
@@ -164,55 +380,84 @@
             background-color: #64748b;
         }
 
-        /* Modal Pop-up */
+        /* Modales */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(2px);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 15px;
         }
 
         .modal {
             background: white;
-            padding: 25px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            padding: 28px;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 540px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.2s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-wide {
+            max-width: 650px;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .modal h2 {
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+            margin-bottom: 18px;
+            font-size: 1.25rem;
             color: #1e293b;
+            font-weight: 700;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         .form-group label {
-            display: block;
+            display: flex;
+            justify-content: space-between;
             font-weight: 600;
             margin-bottom: 6px;
             color: #475569;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
+        }
+
+        .char-counter {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            font-weight: normal;
         }
 
         .form-group input[type="text"], 
         .form-group textarea {
             width: 100%;
-            padding: 10px;
+            padding: 10px 12px;
             border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 0.95rem;
+            border-radius: 7px;
+            font-size: 0.94rem;
             outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input[type="text"]:focus, 
+        .form-group textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
 
         .form-group textarea {
@@ -221,38 +466,318 @@
         }
 
         .file-upload-box {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px dashed #cbd5e1;
-            border-radius: 6px;
+            margin-bottom: 16px;
+            padding: 12px;
+            border: 1px dashed #94a3b8;
+            border-radius: 7px;
             background-color: #f8fafc;
         }
 
         .file-upload-box input {
             font-size: 0.85rem;
+            color: #475569;
+        }
+
+        /* Caja de error en rojo integrada y limpia */
+        .error-container {
+            display: none;
+            background-color: #fef2f2;
+            border: 1.5px solid #f87171;
+            color: #991b1b;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .error-container strong.error-header {
+            display: block;
+            margin-bottom: 4px;
+            color: #b91c1c;
+            font-weight: 700;
+        }
+
+        .error-technical-line {
+            margin-top: 6px;
+            font-weight: 600;
+            color: #7f1d1d;
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: 0.84rem;
+            word-break: break-word;
         }
 
         .modal-buttons {
             display: flex;
             justify-content: flex-end;
             margin-top: 20px;
+            gap: 10px;
+        }
+
+        /* Detalle Completo */
+        .detail-item {
+            margin-bottom: 16px;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .detail-title-val {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.3;
+        }
+
+        .detail-badges-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .detail-text-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 0.94rem;
+            line-height: 1.6;
+            color: #334155;
+            white-space: pre-wrap;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        /* ========================================================
+           MODO OSCURO (DARK MODE)
+           ======================================================== */
+        body.dark-mode {
+            background-color: #0b0f19;
+            color: #f1f5f9;
+        }
+
+        body.dark-mode .container {
+            background-color: #151d30;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        body.dark-mode h1 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .theme-toggle-btn {
+            background-color: #1e293b;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .theme-toggle-btn:hover {
+            background-color: #334155;
+        }
+
+        body.dark-mode .search-section {
+            background-color: #0b0f19;
+            border-color: #1e293b;
+        }
+
+        body.dark-mode .search-title {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .search-input {
+            background-color: #151d30;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .search-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        body.dark-mode .search-dropdown {
+            background-color: #151d30;
+            border-color: #334155;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        body.dark-mode .dropdown-header {
+            background-color: #0b0f19;
+            border-color: #1e293b;
+            color: #94a3b8;
+        }
+
+        body.dark-mode .dropdown-item {
+            color: #cbd5e1;
+            border-color: #1e293b;
+        }
+
+        body.dark-mode .dropdown-item:hover, 
+        body.dark-mode .dropdown-item.active {
+            background-color: #1e293b;
+            color: #60a5fa;
+        }
+
+        body.dark-mode .table-box {
+            background-color: #151d30;
+            border-color: #1e293b;
+        }
+
+        body.dark-mode .table-box h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .counter-badge {
+            background-color: #0b0f19;
+            color: #94a3b8;
+        }
+
+        body.dark-mode table th {
+            background-color: #0b0f19;
+            color: #94a3b8;
+            border-color: #1e293b;
+        }
+
+        body.dark-mode table td {
+            border-color: #1e293b;
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .clickable-row:hover {
+            background-color: #1e293b;
+        }
+
+        body.dark-mode table td strong {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .category-badge {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-color: #334155;
+        }
+
+        body.dark-mode .tag {
+            background-color: #0b0f19;
+            color: #cbd5e1;
+            border-color: #1e293b;
+        }
+
+        body.dark-mode .modal {
+            background-color: #151d30;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        body.dark-mode .modal h2 {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .detail-title-val {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .detail-text-box {
+            background-color: #0b0f19;
+            border-color: #1e293b;
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .form-group label {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .form-group input[type="text"], 
+        body.dark-mode .form-group textarea {
+            background-color: #0b0f19;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .file-upload-box {
+            background-color: #0b0f19;
+            border-color: #334155;
+        }
+
+        body.dark-mode .file-upload-box input {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .error-container {
+            background-color: #450a0a;
+            border-color: #991b1b;
+            color: #fecaca;
+        }
+
+        body.dark-mode .error-container strong.error-header {
+            color: #f87171;
+        }
+
+        body.dark-mode .error-technical-line {
+            color: #fca5a5;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Buscar información en la base de datos</h1>
-
-        <!-- Campo de Búsqueda -->
-        <div class="search-box">
-            <label for="searchInput">Buscar</label>
-            <input type="text" id="searchInput" placeholder="Escriba para buscar por texto o categoría..." oninput="filtrarTabla()">
+        <!-- Encabezado con Boton de Modo Oscuro -->
+        <div class="header-top">
+            <h1>Buscar información en la base de datos</h1>
+            <button class="theme-toggle-btn" id="themeToggleBtn" onclick="alternarModoOscuro()" title="Cambiar a Modo Oscuro / Claro">
+                <svg id="iconMoon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg id="iconSun" style="display:none;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
         </div>
 
-        <!-- Tabla Principal -->
+        <!-- Seccion de busqueda interactiva -->
+        <div class="search-section">
+            <div class="search-title">
+                <span>Buscar y filtrar registros</span>
+                <span style="font-size:0.75rem; color:#64748b; font-weight:normal;">Escribí para ver las opciones en desplegable</span>
+            </div>
+
+            <div class="search-input-wrapper">
+                <input type="text" id="searchInput" class="search-input" 
+                       placeholder="Escribí una palabra (ej: Animal, Backend, Comida, IA...) para filtrar..." 
+                       autocomplete="off"
+                       oninput="alEscribirBusqueda(event)"
+                       onkeydown="alPresionarTecla(event)">
+                <span id="searchClearBtn" class="search-clear-icon" onclick="limpiarTextoInput()">✕</span>
+
+                <div id="searchDropdown" class="search-dropdown">
+                    <div class="dropdown-header">Elegí dónde buscar:</div>
+                    <div id="dropdownItemsContainer"></div>
+                </div>
+            </div>
+
+            <div id="activeFiltersContainer" class="active-filters"></div>
+        </div>
+
+        <!-- Tabla principal de resultados -->
         <div class="table-box">
-            <h2>Mostrar</h2>
+            <div class="table-header-info">
+                <h2>Mostrar</h2>
+                <span class="counter-badge" id="contadorResultados">Cargando registros...</span>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -263,37 +788,44 @@
                         <th>Palabras Clave</th>
                     </tr>
                 </thead>
-                <tbody id="tablaCuerpo">
-                    <!-- Filas cargadas dinámicamente desde Java/Supabase -->
-                </tbody>
+                <tbody id="tablaCuerpo"></tbody>
             </table>
         </div>
 
-        <!-- Botón para abrir el Pop-up -->
         <div class="actions-bar">
             <button class="btn btn-primary" onclick="abrirModal()">Subir texto</button>
         </div>
     </div>
 
-    <!-- Modal Pop-up -->
+    <!-- MODAL 1: SUBIR TEXTO Y CLASIFICAR -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <h2>Información a clasificar</h2>
             
             <div class="form-group">
-                <label for="tituloInput">Título / Asunto</label>
-                <input type="text" id="tituloInput" placeholder="Ej: Redes neuronales en PyTorch">
+                <label for="tituloInput">
+                    <span>Título / Asunto</span>
+                    <span id="tituloCharCounter" class="char-counter">0 / 250</span>
+                </label>
+                <input type="text" id="tituloInput" placeholder="Ej: Redes neuronales en PyTorch" oninput="alCambiarTitulo()">
             </div>
 
             <div class="form-group">
-                <label for="textoInput">Texto a clasificar</label>
-                <textarea id="textoInput" placeholder="Copie y pegue aquí el contenido o cargue un archivo .txt..."></textarea>
+                <label for="textoInput">
+                    <span>Texto a clasificar</span>
+                </label>
+                <textarea id="textoInput" placeholder="Copie y pegue aquí el contenido o cargue un archivo .txt..." oninput="ocultarErrorModal()"></textarea>
             </div>
 
-            <!-- Cargar archivo .txt -->
             <div class="file-upload-box">
-                <label for="fileInput" style="display:block; font-size: 0.8rem; font-weight:600; margin-bottom: 4px;">O cargar archivo .txt:</label>
+                <label for="fileInput" style="display:block; font-size: 0.82rem; font-weight:600; margin-bottom: 5px; color:#475569;">O cargar archivo .txt:</label>
                 <input type="file" id="fileInput" accept=".txt" onchange="leerArchivoTxt(event)">
+            </div>
+
+            <!-- CONTENEDOR DE ERROR EN ROJO INTEGRADO -->
+            <div id="modalErrorContainer" class="error-container">
+                <strong class="error-header">Error en la solicitud:</strong>
+                <div id="modalErrorTexto"></div>
             </div>
 
             <div class="modal-buttons">
@@ -303,78 +835,501 @@
         </div>
     </div>
 
+    <!-- MODAL 2: VER INFORMACIÓN COMPLETA DEL REGISTRO SELECCIONADO -->
+    <div class="modal-overlay" id="detailModalOverlay">
+        <div class="modal modal-wide">
+            <h2>Detalle completo del registro</h2>
+            
+            <div class="detail-item">
+                <div class="detail-label">Título:</div>
+                <div class="detail-title-val" id="detailTitulo"></div>
+            </div>
+
+            <div class="detail-badges-row">
+                <div>
+                    <span class="detail-label" style="display:inline-block; margin-right:4px;">Categoría:</span>
+                    <span class="category-badge" id="detailCategoria"></span>
+                </div>
+                <div>
+                    <span class="detail-label" style="display:inline-block; margin-right:4px;">Probabilidad:</span>
+                    <span class="prob-badge" id="detailProbabilidad"></span>
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Palabras Clave:</div>
+                <div class="keywords" id="detailKeywords"></div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Texto Completo:</div>
+                <div class="detail-text-box" id="detailTexto"></div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="copiarTextoDetalle()">Copiar Texto</button>
+                <button class="btn btn-primary" onclick="cerrarModalDetalle()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const API_URL = '/contenido';
 
-        // Cargar datos al iniciar la pantalla
+        let todosLosRegistros = [];
+        let filtrosActivos = [];
+
         document.addEventListener('DOMContentLoaded', () => {
+            inicializarTema();
             cargarTabla();
+
+            document.addEventListener('click', (e) => {
+                const wrapper = document.querySelector('.search-input-wrapper');
+                if (wrapper && !wrapper.contains(e.target)) {
+                    cerrarDesplegable();
+                }
+            });
         });
 
-        // 1. GET: Consultar los registros guardados
-        async function cargarTabla(query = '') {
-            try {
-                const url = query ? `${API_URL}?query=${encodeURIComponent(query)}` : API_URL;
-                const response = await fetch(url);
-                const datos = await response.json();
-                renderizarTabla(datos);
-            } catch (error) {
-                console.error('Error al cargar la tabla:', error);
+        // 0. CONTROL DE MODO OSCURO / CLARO
+        function inicializarTema() {
+            const temaGuardado = localStorage.getItem('tema_preferido');
+            if (temaGuardado === 'oscuro') {
+                document.body.classList.add('dark-mode');
+                actualizarIconosTema(true);
+            } else {
+                actualizarIconosTema(false);
             }
         }
 
-        // Renderizar las filas recibidas de Supabase
+        function alternarModoOscuro() {
+            const esOscuro = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('tema_preferido', esOscuro ? 'oscuro' : 'claro');
+            actualizarIconosTema(esOscuro);
+        }
+
+        function actualizarIconosTema(esOscuro) {
+            const iconMoon = document.getElementById('iconMoon');
+            const iconSun = document.getElementById('iconSun');
+            if (esOscuro) {
+                iconMoon.style.display = 'none';
+                iconSun.style.display = 'block';
+            } else {
+                iconMoon.style.display = 'block';
+                iconSun.style.display = 'none';
+            }
+        }
+
+        // 1. GET: Consulta de datos desde Spring Boot
+        async function cargarTabla() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) {
+                    throw new Error('Error de conexión (' + response.status + ')');
+                }
+                todosLosRegistros = await response.json();
+                aplicarFiltrosYRenderizar();
+            } catch (error) {
+                console.error('Error al cargar tabla:', error);
+                const tbody = document.getElementById('tablaCuerpo');
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#b91c1c; padding:20px; font-weight:600;">
+                    No se pudieron cargar los registros. Verifique que el servidor Spring Boot esté corriendo.
+                </td></tr>`;
+                document.getElementById('contadorResultados').innerText = '0 registros';
+            }
+        }
+
+        // 2. Desplegable dinámico al escribir
+        function alEscribirBusqueda(event) {
+            const query = event.target.value.trim();
+            const clearBtn = document.getElementById('searchClearBtn');
+            clearBtn.style.display = query ? 'block' : 'none';
+
+            if (!query) {
+                cerrarDesplegable();
+                aplicarFiltrosYRenderizar();
+                return;
+            }
+
+            generarOpcionesDesplegable(query);
+            aplicarFiltrosYRenderizar();
+        }
+
+        function generarOpcionesDesplegable(query) {
+            const dropdown = document.getElementById('searchDropdown');
+            const container = document.getElementById('dropdownItemsContainer');
+            container.innerHTML = '';
+
+            const qLower = query.toLowerCase();
+
+            const countTitulo = todosLosRegistros.filter(r => (r.titulo || '').toLowerCase().includes(qLower)).length;
+            const countCategoria = todosLosRegistros.filter(r => (r.categoria || '').toLowerCase().includes(qLower)).length;
+            const countTexto = todosLosRegistros.filter(r => (r.texto || '').toLowerCase().includes(qLower)).length;
+            const countKeywords = todosLosRegistros.filter(r => {
+                const kws = r.informacion_adicional || r.informacionAdicional || [];
+                return kws.some(k => k.toLowerCase().includes(qLower));
+            }).length;
+
+            const opciones = [
+                { tipo: 'titulo', nombre: 'Título', valor: query, count: countTitulo },
+                { tipo: 'categoria', nombre: 'Categoría', valor: query, count: countCategoria },
+                { tipo: 'palabras_clave', nombre: 'Palabras Claves', valor: query, count: countKeywords },
+                { tipo: 'texto', nombre: 'Texto', valor: query, count: countTexto },
+                { tipo: 'todo', nombre: 'Todo (General)', valor: query, count: null }
+            ];
+
+            // Detección numérica de probabilidad y generación de opciones con operadores
+            const num = parseFloat(query.replace('%', '').trim());
+            if (!isNaN(num) && num >= 0 && num <= 100) {
+                const probVal = num > 1 ? num / 100 : num;
+                const porcTexto = (probVal * 100).toFixed(0) + '%';
+
+                const operadores = [
+                    { op: '=',  nombre: `Probabilidad = ${porcTexto} (Igual a)`, fn: p => Math.round(p * 100) === Math.round(probVal * 100), label: `Probabilidad = ${porcTexto}` },
+                    { op: '>=', nombre: `Probabilidad ≥ ${porcTexto} (Mayor o igual)`, fn: p => Math.round(p * 100) >= Math.round(probVal * 100), label: `Probabilidad ≥ ${porcTexto}` },
+                    { op: '>',  nombre: `Probabilidad > ${porcTexto} (Mayor que)`, fn: p => Math.round(p * 100) > Math.round(probVal * 100), label: `Probabilidad > ${porcTexto}` },
+                    { op: '<=', nombre: `Probabilidad ≤ ${porcTexto} (Menor o igual)`, fn: p => Math.round(p * 100) <= Math.round(probVal * 100), label: `Probabilidad ≤ ${porcTexto}` },
+                    { op: '<',  nombre: `Probabilidad < ${porcTexto} (Menor que)`, fn: p => Math.round(p * 100) < Math.round(probVal * 100), label: `Probabilidad < ${porcTexto}` }
+                ];
+
+                operadores.forEach((o, index) => {
+                    const count = todosLosRegistros.filter(r => o.fn(r.probabilidad != null ? r.probabilidad : 0)).length;
+                    opciones.splice(3 + index, 0, {
+                        tipo: 'probabilidad',
+                        operador: o.op,
+                        nombre: o.nombre,
+                        valor: probVal,
+                        count: count,
+                        customLabel: o.label
+                    });
+                });
+            }
+
+            opciones.forEach(op => {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                const countTexto = op.count !== null ? `<span class="dropdown-item-count">(${op.count} resultado${op.count === 1 ? '' : 's'})</span>` : '';
+                
+                const textoMostrar = op.tipo === 'probabilidad'
+                    ? `Filtrar por <strong>${op.nombre}</strong>`
+                    : `Buscar "<strong>${escapeHtml(query)}</strong>" en <strong>${op.nombre}</strong>`;
+
+                item.innerHTML = `
+                    <div class="dropdown-item-content">
+                        <span>${textoMostrar}</span>
+                    </div>
+                    ${countTexto}
+                `;
+                item.onclick = () => seleccionarFiltroDesplegable(op.tipo, op.valor, op.nombre, op.operador, op.customLabel);
+                container.appendChild(item);
+            });
+
+            dropdown.style.display = 'block';
+        }
+
+        function alPresionarTecla(event) {
+            if (event.key === 'Enter') {
+                const primerItem = document.querySelector('.dropdown-item');
+                if (primerItem) {
+                    primerItem.click();
+                }
+            } else if (event.key === 'Escape') {
+                cerrarDesplegable();
+            }
+        }
+
+        function seleccionarFiltroDesplegable(tipo, valor, nombreLabel, operador, customLabel) {
+            const labelFinal = customLabel || `${nombreLabel}: "${typeof valor === 'number' ? (valor * 100) + '%' : valor}"`;
+            const yaExiste = filtrosActivos.some(f => f.tipo === tipo && f.valor === valor && f.operador === operador);
+            if (!yaExiste) {
+                filtrosActivos.push({
+                    tipo: tipo,
+                    valor: valor,
+                    operador: operador || null,
+                    label: labelFinal
+                });
+            }
+
+            limpiarTextoInput();
+            cerrarDesplegable();
+            renderizarEtiquetasActivas();
+            aplicarFiltrosYRenderizar();
+        }
+
+        function cerrarDesplegable() {
+            document.getElementById('searchDropdown').style.display = 'none';
+        }
+
+        function limpiarTextoInput() {
+            const input = document.getElementById('searchInput');
+            input.value = '';
+            document.getElementById('searchClearBtn').style.display = 'none';
+            cerrarDesplegable();
+            aplicarFiltrosYRenderizar();
+        }
+
+        function renderizarEtiquetasActivas() {
+            const container = document.getElementById('activeFiltersContainer');
+            container.innerHTML = '';
+
+            if (filtrosActivos.length === 0) return;
+
+            filtrosActivos.forEach((filtro, idx) => {
+                const tag = document.createElement('span');
+                tag.className = 'filter-tag';
+                tag.innerHTML = `
+                    <span>${escapeHtml(filtro.label)}</span>
+                    <span class="filter-tag-close" onclick="eliminarFiltro(${idx})" title="Quitar filtro">✕</span>
+                `;
+                container.appendChild(tag);
+            });
+
+            const btnLimpiar = document.createElement('button');
+            btnLimpiar.className = 'btn-clear-all';
+            btnLimpiar.innerText = 'Limpiar filtros';
+            btnLimpiar.onclick = limpiarTodosLosFiltros;
+            container.appendChild(btnLimpiar);
+        }
+
+        function eliminarFiltro(index) {
+            filtrosActivos.splice(index, 1);
+            renderizarEtiquetasActivas();
+            aplicarFiltrosYRenderizar();
+        }
+
+        function limpiarTodosLosFiltros() {
+            filtrosActivos = [];
+            limpiarTextoInput();
+            renderizarEtiquetasActivas();
+            aplicarFiltrosYRenderizar();
+        }
+
+        // 3. Aplicacion de filtros
+        function aplicarFiltrosYRenderizar() {
+            const inputQuery = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+
+            const filtrados = todosLosRegistros.filter(item => {
+                const titulo = (item.titulo || '').toLowerCase();
+                const texto = (item.texto || '').toLowerCase();
+                const categoria = (item.categoria || '').toLowerCase();
+                const palabrasClave = (item.informacion_adicional || item.informacionAdicional || []).map(p => p.toLowerCase());
+                const prob = item.probabilidad != null ? item.probabilidad : 0;
+
+                for (const f of filtrosActivos) {
+                    const fVal = typeof f.valor === 'string' ? f.valor.toLowerCase() : f.valor;
+
+                    if (f.tipo === 'titulo' && !titulo.includes(fVal)) return false;
+                    if (f.tipo === 'categoria' && !categoria.includes(fVal)) return false;
+                    if (f.tipo === 'texto' && !texto.includes(fVal)) return false;
+                    if (f.tipo === 'palabras_clave' && !palabrasClave.some(k => k.includes(fVal))) return false;
+                    
+                    if (f.tipo === 'probabilidad') {
+                        const p100 = Math.round(prob * 100);
+                        const v100 = Math.round(f.valor * 100);
+                        if (f.operador === '=') {
+                            if (p100 !== v100) return false;
+                        } else if (f.operador === '>=') {
+                            if (p100 < v100) return false;
+                        } else if (f.operador === '>') {
+                            if (p100 <= v100) return false;
+                        } else if (f.operador === '<=') {
+                            if (p100 > v100) return false;
+                        } else if (f.operador === '<') {
+                            if (p100 >= v100) return false;
+                        } else {
+                            if (prob < f.valor) return false;
+                        }
+                    }
+
+                    if (f.tipo === 'todo') {
+                        const coincideTodo = titulo.includes(fVal) || texto.includes(fVal) || categoria.includes(fVal) || palabrasClave.some(k => k.includes(fVal));
+                        if (!coincideTodo) return false;
+                    }
+                }
+
+                if (inputQuery) {
+                    const coincideActual = titulo.includes(inputQuery) || texto.includes(inputQuery) || categoria.includes(inputQuery) || palabrasClave.some(k => k.includes(inputQuery));
+                    if (!coincideActual) return false;
+                }
+
+                return true;
+            });
+
+            renderizarTabla(filtrados);
+        }
+
         function renderizarTabla(lista) {
             const tbody = document.getElementById('tablaCuerpo');
+            const contador = document.getElementById('contadorResultados');
             tbody.innerHTML = '';
 
+            contador.innerText = `${lista.length} de ${todosLosRegistros.length} registro(s)`;
+
             if (!lista || lista.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#94a3b8;">No se encontraron registros.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:25px;">No se encontraron registros con los filtros actuales.</td></tr>';
                 return;
             }
 
             lista.forEach(item => {
                 const tr = document.createElement('tr');
+                tr.className = 'clickable-row';
+                tr.title = 'Haga click para ver la información completa';
                 
-                // Adaptación flexible según la estructura recibida
                 const titulo = item.titulo || 'Sin título';
                 const texto = item.texto || 'Sin texto';
                 const categoria = item.categoria || 'Sin categoría';
-                const probabilidad = item.probabilidad ? `${(item.probabilidad * 100).toFixed(1)}%` : 'N/A';
+                const probNum = item.probabilidad != null ? (item.probabilidad * 100).toFixed(1) : null;
+                
+                const probabilidadHtml = probNum !== null 
+                    ? `<span class="prob-badge">${probNum}%</span>` 
+                    : '<span style="color:#94a3b8;">N/A</span>';
                 
                 const palabrasClave = item.informacion_adicional || item.informacionAdicional || [];
-                const tagsHtml = palabrasClave.map(p => `<span class="tag">${p}</span>`).join(' ');
+                const tagsHtml = palabrasClave.length > 0 
+                    ? palabrasClave.map(p => `<span class="tag">${escapeHtml(p)}</span>`).join(' ')
+                    : '<span style="color:#94a3b8; font-size:0.8rem;">-</span>';
 
                 tr.innerHTML = `
-                    <td><strong>${escapeHtml(titulo)}</strong></td>
-                    <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(texto)}</td>
-                    <td><span class="badge">${escapeHtml(categoria)}</span></td>
-                    <td>${probabilidad}</td>
+                    <td style="font-weight:600; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtml(titulo)}"><strong>${escapeHtml(titulo)}</strong></td>
+                    <td style="max-width: 280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(texto)}</td>
+                    <td><span class="category-badge">${escapeHtml(categoria)}</span></td>
+                    <td>${probabilidadHtml}</td>
                     <td><div class="keywords">${tagsHtml}</div></td>
                 `;
+                
+                tr.onclick = () => abrirModalDetalle(item);
+
                 tbody.appendChild(tr);
             });
         }
 
-        // 2. Buscador en tiempo real
-        function filtrarTabla() {
-            const query = document.getElementById('searchInput').value;
-            cargarTabla(query);
+        // 4. MODAL DE DETALLE COMPLETO
+        function abrirModalDetalle(item) {
+            const titulo = item.titulo || 'Sin título';
+            const texto = item.texto || 'Sin texto';
+            const categoria = item.categoria || 'Sin categoría';
+            const probNum = item.probabilidad != null ? (item.probabilidad * 100).toFixed(1) : null;
+            const palabrasClave = item.informacion_adicional || item.informacionAdicional || [];
+
+            document.getElementById('detailTitulo').innerText = titulo;
+            document.getElementById('detailTexto').innerText = texto;
+            document.getElementById('detailCategoria').innerText = categoria;
+            document.getElementById('detailProbabilidad').innerText = probNum !== null ? `${probNum}%` : 'N/A';
+
+            const kwContainer = document.getElementById('detailKeywords');
+            kwContainer.innerHTML = '';
+            if (palabrasClave.length > 0) {
+                palabrasClave.forEach(k => {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.innerText = k;
+                    kwContainer.appendChild(tag);
+                });
+            } else {
+                kwContainer.innerHTML = '<span style="color:#94a3b8; font-size:0.85rem;">No hay palabras clave disponibles</span>';
+            }
+
+            document.getElementById('detailModalOverlay').style.display = 'flex';
         }
 
-        // 3. POST: Enviar texto del Pop-up a Spring Boot
+        function cerrarModalDetalle() {
+            document.getElementById('detailModalOverlay').style.display = 'none';
+        }
+
+        function copiarTextoDetalle() {
+            const texto = document.getElementById('detailTexto').innerText;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert('Texto copiado al portapapeles.');
+            }).catch(() => {
+                console.error('Error al copiar texto');
+            });
+        }
+
+        function alCambiarTitulo() {
+            ocultarErrorModal();
+            const input = document.getElementById('tituloInput');
+            const counter = document.getElementById('tituloCharCounter');
+            const len = input.value.length;
+            counter.innerText = `${len} / 250`;
+            if (len > 250) {
+                counter.style.color = '#ef4444';
+                counter.style.fontWeight = '700';
+            } else {
+                counter.style.color = '#94a3b8';
+                counter.style.fontWeight = 'normal';
+            }
+        }
+
+        // 5. POST: Guardar y clasificar con texto técnico Postman integrado
         async function guardarTexto() {
             const titulo = document.getElementById('tituloInput').value.trim();
             const texto = document.getElementById('textoInput').value.trim();
             const btnConfirmar = document.getElementById('btnConfirmar');
 
-            if (!titulo || !texto) {
-                alert('Por favor complete tanto el título como el texto.');
+            ocultarErrorModal();
+
+            // 1. Caso: Ambos vacios
+            if (!titulo && !texto) {
+                mostrarErrorModal(
+                    'Por favor complete tanto el título como el texto antes de confirmar.',
+                    'Resultado: 400 Bad Request ➔ { "titulo": "El título no puede estar vacío", "texto": "El texto no puede estar vacío" }'
+                );
+                return;
+            }
+
+            // 2. Caso: Solo titulo vacio
+            if (!titulo) {
+                mostrarErrorModal(
+                    'Por favor complete el campo título antes de confirmar.',
+                    'Resultado: 400 Bad Request ➔ { "titulo": "El título no puede estar vacío" }'
+                );
+                return;
+            }
+
+            // 3. Caso: Solo texto vacio
+            if (!texto) {
+                mostrarErrorModal(
+                    'Por favor complete el campo texto antes de confirmar.',
+                    'Resultado: 400 Bad Request ➔ { "texto": "El texto no puede estar vacío" }'
+                );
+                return;
+            }
+
+            // 4. Caso: Titulo supera los 250 caracteres
+            if (titulo.length > 250) {
+                mostrarErrorModal(
+                    'El título no puede superar los 250 caracteres.',
+                    'Resultado: 400 Bad Request ➔ { "titulo": "El título no puede superar los 250 caracteres" }'
+                );
+                return;
+            }
+
+            // 5. Caso: Caracteres especiales no permitidos en titulo
+            const regexValida = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ .,;:\-_()¿?¡!]+$/;
+            if (!regexValida.test(titulo)) {
+                mostrarErrorModal(
+                    'El título contiene caracteres especiales no permitidos (como comillas " o \'). Solo se permiten letras, números y signos de puntuación básicos.',
+                    'Resultado: 400 Bad Request ➔ { "error": "400 Bad Request (Manejo controlado de sintaxis inválida)." }'
+                );
+                return;
+            }
+
+            // 6. Caso: Duplicado en la base de datos
+            const esDuplicado = todosLosRegistros.some(r => 
+                (r.titulo || '').trim().toLowerCase() === titulo.toLowerCase() && 
+                (r.texto || '').trim().toLowerCase() === texto.toLowerCase()
+            );
+
+            if (esDuplicado) {
+                mostrarErrorModal(
+                    'Esta tabla ya existe en la base de datos!',
+                    'Resultado: 400 Bad Request ➔ { "error": "Esta tabla ya existe en la base de datos!" }'
+                );
                 return;
             }
 
             try {
-                btnConfirmar.innerText = "Procesando...";
+                btnConfirmar.innerText = "Clasificando...";
                 btnConfirmar.disabled = true;
 
                 const response = await fetch(API_URL, {
@@ -385,39 +1340,80 @@
 
                 if (response.ok) {
                     cerrarModal();
-                    cargarTabla(); // Recarga la tabla en vivo con la nueva clasificación
+                    await cargarTabla();
                 } else {
-                    const errData = await response.json();
-                    alert('Error: ' + JSON.stringify(errData));
+                    let errJson = '';
+                    try {
+                        const data = await response.json();
+                        errJson = JSON.stringify(data);
+                    } catch (e) {
+                        errJson = '{ "error": "Ocurrió un problema al procesar la solicitud con el servicio de IA." }';
+                    }
+
+                    if (response.status === 500) {
+                        mostrarErrorModal(
+                            'Ocurrió un problema al procesar la solicitud con el servicio de IA.',
+                            `Resultado: 500 Internal Server Error ➔ ${errJson}`
+                        );
+                    } else {
+                        mostrarErrorModal(
+                            'Ocurrió un error al procesar la solicitud en el servidor.',
+                            `Resultado: 400 Bad Request ➔ ${errJson}`
+                        );
+                    }
                 }
             } catch (error) {
                 console.error('Error al guardar:', error);
-                alert('Ocurrió un error al conectar con el servidor.');
+                mostrarErrorModal(
+                    'Ocurrió un problema al procesar la solicitud con el servicio de IA.',
+                    'Resultado: 500 Internal Server Error ➔ { "error": "Ocurrió un problema al procesar la solicitud con el servicio de IA." }'
+                );
             } finally {
                 btnConfirmar.innerText = "Confirmar";
                 btnConfirmar.disabled = false;
             }
         }
 
-        // Lector de archivos .txt para el Pop-up
+        // Muestra el mensaje de error integrado de forma limpia
+        function mostrarErrorModal(mensajeExplicativo, lineaTecnica) {
+            const errorContainer = document.getElementById('modalErrorContainer');
+            const errorTexto = document.getElementById('modalErrorTexto');
+
+            let html = `<div>${mensajeExplicativo}</div>`;
+            if (lineaTecnica) {
+                html += `<div class="error-technical-line">${lineaTecnica}</div>`;
+            }
+
+            errorTexto.innerHTML = html;
+            errorContainer.style.display = 'block';
+        }
+
+        function ocultarErrorModal() {
+            const errorContainer = document.getElementById('modalErrorContainer');
+            errorContainer.style.display = 'none';
+        }
+
+        // Lector de archivos .txt
         function leerArchivoTxt(event) {
             const file = event.target.files[0];
             if (!file) return;
 
+            ocultarErrorModal();
             const reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('textoInput').value = e.target.result;
                 if (!document.getElementById('tituloInput').value) {
-                    // Usa el nombre del archivo como título por defecto
                     document.getElementById('tituloInput').value = file.name.replace('.txt', '');
+                    alCambiarTitulo();
                 }
             };
             reader.readAsText(file);
         }
 
-        // Manejo de la ventana Modal
         function abrirModal() {
+            ocultarErrorModal();
             document.getElementById('modalOverlay').style.display = 'flex';
+            alCambiarTitulo();
         }
 
         function cerrarModal() {
@@ -425,10 +1421,16 @@
             document.getElementById('tituloInput').value = '';
             document.getElementById('textoInput').value = '';
             document.getElementById('fileInput').value = '';
+            ocultarErrorModal();
         }
 
         function escapeHtml(str) {
-            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
         }
     </script>
 </body>

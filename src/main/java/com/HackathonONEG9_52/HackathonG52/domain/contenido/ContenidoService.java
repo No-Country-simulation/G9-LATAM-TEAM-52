@@ -6,6 +6,7 @@ import com.HackathonONEG9_52.HackathonG52.domain.clasificacion.Clasificacion;
 import com.HackathonONEG9_52.HackathonG52.domain.clasificacion.ClasificacionDTO;
 import com.HackathonONEG9_52.HackathonG52.domain.clasificacion.ClasificacionRepository;
 import com.HackathonONEG9_52.HackathonG52.domain.pythonapi.PythonAPI;
+import com.HackathonONEG9_52.HackathonG52.exception.ClasificacionException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,18 +24,10 @@ public class ContenidoService {
 
     // 1. Guarda el contenido, consulta a OCI y vincula las 3 tablas en Supabase
     public ClasificacionDTO guardarYClasificar(ContenidoDTO dto) {
-        // Buscamos si ya existe el mismo texto para no duplicar ni gastar llamadas de IA
+        // Validamos si ya existe el mismo título y texto
         Optional<Contenido> contenidoExistente = contenidoRepository.findByTituloAndTexto(dto.titulo(), dto.texto());
-        if (contenidoExistente.isEmpty()) {
-            contenidoExistente = contenidoRepository.findByTexto(dto.texto());
-        }
-
-        // Si ya está guardado, devolvemos la clasificación vieja directamente
         if (contenidoExistente.isPresent()) {
-            Optional<Clasificacion> clasificacionExistente = clasificacionRepository.findByContenido(contenidoExistente.get());
-            if (clasificacionExistente.isPresent()) {
-                return clasificacionExistente.get().aDTO();
-            }
+            throw new ClasificacionException("Esta tabla ya existe en la base de datos!");
         }
 
         Contenido contenido = new Contenido(dto);
