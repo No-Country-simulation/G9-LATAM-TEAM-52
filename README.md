@@ -105,15 +105,25 @@ Content-Type: application/json
 ```
 
 ## Modelo de Data Science
-- Dataset utilizado
-- Enfoque (TF-IDF + Regresión Logística)
-- Métricas de evaluación
+- Dataset utilizado:<br/>
+  [StackSample, de Stack Overflow](https://www.kaggle.com/datasets/stackoverflow/stacksample/data)
+  Se utilizan desde 2000 a 50.000
+  
+- Enfoque (TF-IDF + Regresión Logística):<br/>
+  El algoritmo con mejor desempeño para cubrir las necesidades del proyecto es Regresión Logística
+
+- Métricas de evaluación:<br/>
+  El porcentaje de exactitud con el que cuenta el modelo, contando con 6 categorías y al menos 7 sub categorías por cada una, es de 94.83%. La especificación por categoría se encuentra en la siguiente imagen (Además, se puede consultar la documentación anexa al proyecto).<br/><br/>
+
+  <img width="559" height="385" alt="image" src="https://github.com/user-attachments/assets/d0445949-e14d-421e-baa3-2adbd17878b2" />
+
+
 
 ## Integración con OCI
 
 ### - Object Storage
 
-### - OCI Copmute
+### - OCI Compute
 
 ### - OCI Functions
 
