@@ -16,7 +16,7 @@
         body {
             background-color: #f4f6f9;
             color: #333;
-            padding: 30px 15px;
+            padding: 30px 15px 95px 15px;
             display: flex;
             justify-content: center;
         }
@@ -380,6 +380,57 @@
             background-color: #64748b;
         }
 
+        /* Boton Flotante Subir Texto */
+        .floating-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 990;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 13px 22px;
+            background-color: #2563eb;
+            color: #ffffff;
+            font-size: 0.96rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.38), 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+
+        .floating-btn svg {
+            transition: transform 0.22s ease;
+        }
+
+        .floating-btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.48), 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .floating-btn:hover svg {
+            transform: rotate(90deg);
+        }
+
+        .floating-btn:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        @media (max-width: 640px) {
+            .floating-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 11px 18px;
+                font-size: 0.9rem;
+                gap: 7px;
+            }
+        }
+
         /* Modales */
         .modal-overlay {
             position: fixed;
@@ -722,6 +773,18 @@
         body.dark-mode .error-technical-line {
             color: #fca5a5;
         }
+
+        body.dark-mode .floating-btn {
+            background-color: #3b82f6;
+            color: #ffffff;
+            box-shadow: 0 6px 24px rgba(59, 130, 246, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        body.dark-mode .floating-btn:hover {
+            background-color: #2563eb;
+            box-shadow: 0 10px 28px rgba(59, 130, 246, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -792,10 +855,16 @@
             </table>
         </div>
 
-        <div class="actions-bar">
-            <button class="btn btn-primary" onclick="abrirModal()">Subir texto</button>
-        </div>
     </div>
+
+    <!-- Botón Flotante para Subir Texto -->
+    <button class="floating-btn" id="btnSubirFlotante" onclick="abrirModal()" title="Subir nuevo texto para clasificar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>Subir texto</span>
+    </button>
 
     <!-- MODAL 1: SUBIR TEXTO Y CLASIFICAR -->
     <div class="modal-overlay" id="modalOverlay">
